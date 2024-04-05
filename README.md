@@ -12,5 +12,5 @@ For the intial setup, we're using OpenGL since we won't actually be using a grap
 - The distinction between Renderer and RenderAPI is a bit unnecessary - maybe combine them for smaller projects.
 - Maybe typedef std::shared_ptr.
 - Don't go overkill on pointers.
-- Having a function take in an alias means that you can't declare the variable inside of the function parameter - quite annoying, so maybe change the convention to take in pointers, and give references?
+- Having a function take in an alias means that you can't declare the variable inside of the function parameter - quite annoying, so maybe don't use aliases for types that are really small anyway like 32 bit integers or something (ie the types that you often just want to declare in the funciton).
 - General project structure is really nice - keep to it but maybe the Layer-LayerStack relationship needs readjusting to make things clearer.

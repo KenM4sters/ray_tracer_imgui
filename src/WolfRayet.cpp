@@ -2,6 +2,7 @@
 #include "Interface/Interface.h"
 #include "Scene.h"
 #include "App.h"
+#include "Renderer.h"
 
 /**
  * Main entry point - acts as a small abstraction from the App class to seperate core functionality
@@ -14,6 +15,7 @@ class WolfRayet : public App {
             : App(name, w, h) 
         {
             PushLayer(new Scene());
+            PushLayer(new Renderer());
             PushOverlay(new Interface());
         }
         ~WolfRayet() 

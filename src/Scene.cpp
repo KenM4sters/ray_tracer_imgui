@@ -29,12 +29,11 @@ void Scene::PrepareImage()
         m_sceneData[i] = 0xffff00ff;
     }
     m_image->SetData(m_sceneData);
-    // m_image->LoadTextureFromFIle("Assets/Textures/container2.png");
 }
 
 void Scene::PassImage() 
 {
-    ImGui::Image((void*)(intptr_t)m_image->m_ID, ImVec2((float)m_image->GetWidth(), (float)m_image->GetHeight()));
+    ImGui::Image((void*)(intptr_t)m_image->m_ID, ImVec2((float)m_image->GetWidth(), (float)m_image->GetHeight()), ImVec2(0, 1), ImVec2(1, 0));
 }
 
 void Scene::UpdateInterface() 
@@ -71,7 +70,6 @@ void Scene::UpdateInterface()
         }
         PassImage();
     }
-
     // End() is called from the interface in case you forget to call it here, but there's no harm
     // in doing it anywhere for clarity.
 }
