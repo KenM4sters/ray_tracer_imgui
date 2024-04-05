@@ -17,7 +17,7 @@ void Interface::OnAttach()
     io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking Controls
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
@@ -37,7 +37,7 @@ void Interface::OnDetach()
 
 void Interface::Begin() 
 {
-    bool bShowDemoWindow = true;
+    bool bShowDemoWindow = false;
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
