@@ -5,13 +5,13 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/local/macOS/include/**",
-                "/Users/samuelbrookman/Desktop/Engines/Reach/vendor/glm/**",
-                "/Users/samuelbrookman/Desktop/Engines/Reach/vendor/GLFW/**",
-                "/Users/samuelbrookman/Desktop/Engines/Reach/vendor/glad/**",
-                "/Users/samuelbrookman/Desktop/Engines/Reach/vendor/assimp/**",
-                "/Users/samuelbrookman/Desktop/Engines/Reach/vendor/ImGui/**",
-                "/Users/samuelbrookman/Desktop/Engines/Reach/vendor/KHR/**",
-                "/Users/samuelbrookman/Desktop/Engines/Reach/vendor/Stbi_image/**"
+                "/Users/samuelbrookman/Desktop/Engines/WolfRayet/vendor/glm/**",
+                "/Users/samuelbrookman/Desktop/Engines/WolfRayet/vendor/GLFW/**",
+                "/Users/samuelbrookman/Desktop/Engines/WolfRayet/vendor/glad/**",
+                "/Users/samuelbrookman/Desktop/Engines/WolfRayet/vendor/assimp/**",
+                "/Users/samuelbrookman/Desktop/Engines/WolfRayet/vendor/ImGui/**",
+                "/Users/samuelbrookman/Desktop/Engines/WolfRayet/vendor/KHR/**",
+                "/Users/samuelbrookman/Desktop/Engines/WolfRayet/vendor/Stbi_image/**"
             ],
             "defines": [],
             "macFrameworkPath": [

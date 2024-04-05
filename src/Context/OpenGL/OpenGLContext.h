@@ -1,6 +1,6 @@
 #pragma once
 #include "../../Window.h"
-#include "../GraphicsContext.h"
+#include "../../GraphicsContext.h"
 
 
 class OpenGLContext : public GraphicsContext {

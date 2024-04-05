@@ -1,7 +1,7 @@
 #pragma once
 #include "Layer.h"
 
-class Scene : Layer {
+class Scene : public Layer {
     public:
         Scene();
         ~Scene() {

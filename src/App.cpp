@@ -25,7 +25,7 @@ void App::Run()
         m_window->PreRender(); 
         
         m_window->PostRender();
-        ReachCore::Time::Update(); // Useful for getting the time between frames.
+        WolfRayetCore::Time::Update(); // Useful for getting the time between frames.
     }
 }
 

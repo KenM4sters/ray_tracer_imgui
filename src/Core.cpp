@@ -1,8 +1,8 @@
 #include "Core.h"
 
-float ReachCore::Time::m_currentFrame = 0;
-float ReachCore::Time::m_previousFrame = 0;
-float ReachCore::Time::m_deltaTime = 0;
+float WolfRayetCore::Time::m_currentFrame = 0;
+float WolfRayetCore::Time::m_previousFrame = 0;
+float WolfRayetCore::Time::m_deltaTime = 0;
 
 std::vector<float> square_vertices = {
     1.0f,  1.0f, 0.0f,  0.0f, 0.0f, 1.0f,   1.0f, 1.0f,  

@@ -17,10 +17,6 @@ enum BufferBits {
     DEPTH = 1 << 2,
     STENCIL = 1 << 3
 };
-enum TestFlags {
-    DEPTH = 1 << 0,
-    STENCIL = 1 << 1
-};
 
 class RenderCommand {
     public:

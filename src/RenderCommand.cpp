@@ -30,6 +30,6 @@ void RenderCommand::SetViewportDimensions(uint32_t width, uint32_t height)
 
 void RenderCommand::Enable(uint32_t flags) 
 {
-    if(flags & TestFlags::DEPTH) glEnable(GL_DEPTH_TEST);
-    if(flags & TestFlags::STENCIL) glEnable(GL_STENCIL_TEST);
+    if(flags & BufferBits::DEPTH) glEnable(GL_DEPTH_TEST);
+    if(flags & BufferBits::STENCIL) glEnable(GL_STENCIL_TEST);
 }

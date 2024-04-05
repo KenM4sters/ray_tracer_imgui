@@ -22,7 +22,7 @@ extern uint32_t square_indices[6];
  * Vertex Struct to hold important data for every vertex of model.
  * @param Position XYZ coords in 3D space.
  * @param Normal XYZ coords of a normalised vector perpendicular to its position.
- * @param UV 2 Dimensional coordiantes that correspond to specific fragment on a texture. 
+ * @param UV 2 Dimensional coordiantes that correspond to a specific fragment on a texture. 
 */
 struct Vertex {
     glm::vec3 Position;
@@ -37,7 +37,7 @@ std::vector<Vertex> MakeVertexFromFloat(std::vector<float> f_vertices);
 /**
  * Static Time utility function used to access the elapsed time in miliseconds    
 */
-namespace ReachCore 
+namespace WolfRayetCore 
 {
     class Time {
         public:
@@ -64,5 +64,15 @@ namespace ReachCore
             static float m_currentFrame;
             static float m_previousFrame;
             static float m_deltaTime;
+    };
+
+    class Logger {
+        public:
+            static void PrintInteger(uint32_t val) { std::cout << val << std::endl; }
+            static void PrintString(std::string val) { std::cout << val << std::endl; }
+            static void PrintVec3f(glm::vec3 val, std::string belongsTo = "") 
+            {
+                std::cout << belongsTo << " | " << "x: " << val.x << "    " << "y: " << val.y  << "     " << "z: " << val.z << std::endl;
+            }
     };
 }

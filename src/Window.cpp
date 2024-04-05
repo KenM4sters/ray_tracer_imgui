@@ -92,7 +92,7 @@ Window::Window(std::string name, uint16_t w, uint16_t h)
         std::cout << "FAILED to initialize GLAD" << std::endl;
     }
 
-    RenderCommand::Enable(TestFlags::DEPTH);
+    RenderCommand::Enable(BufferBits::DEPTH);
     RenderCommand::SetViewportDimensions(800*2, 600*2); // (w * h)*pixel ratio of the screen in use (which is 2 for me).
 }
 

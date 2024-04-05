@@ -8,26 +8,22 @@
  * from implementation. 
 */
 
-class Reach : public App {
+class WolfRayet : public App {
     public:
-        Reach(std::string name, uint16_t w, uint16_t h)
+        WolfRayet(std::string name, uint16_t w, uint16_t h)
             : App(name, w, h) 
         {
             PushLayer(new Scene());
             PushOverlay(new Interface());
         }
-        ~Reach() 
+        ~WolfRayet() 
         {
-            for(const auto& layer : *m_layerStack) 
-            {
-                delete layer;
-            }
         }
 };
 
 
 int main() {
-    std::unique_ptr<Reach> reach = std::make_unique<Reach>("Reach", 800, 600);
-    reach->Run();
+    std::unique_ptr<WolfRayet> wolf_rayet = std::make_unique<WolfRayet>("WolfRayet", 800, 600);
+    wolf_rayet->Run();
     return 0;
 }
