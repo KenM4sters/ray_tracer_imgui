@@ -8,22 +8,19 @@ class Layer {
         {
 
         }
-        virtual ~Layer() 
-        {
-            OnDetach();
-        }
+        virtual ~Layer() {}
+
+        virtual void OnAttach() = 0;
+        virtual void OnDetach() = 0;
         // Some layers may or may not need a mismatch of these functions, so we'll make it 
         // optional to override them.
-        virtual void OnAttach() {}
-        virtual void OnDetach() {}
         virtual void Update() {}
-        virtual void UpdateInterface() {}
+        virtual void UpdateInterface() {};
         virtual void Begin() {}
         virtual void End() {}
+        inline std::string GetName() const { return m_debugName; }
 
-        std::string GetName() const {
-            return m_debugName;
-        }
+        bool m_shouldUpdate = true;
     private:
         std::string m_debugName;
 };
