@@ -14,9 +14,9 @@ class WolfRayet : public App {
         WolfRayet(std::string name, uint16_t w, uint16_t h)
             : App(name, w, h) 
         {
-            PushLayer(new Scene());
-            PushLayer(new Renderer());
             PushOverlay(new Interface());
+            PushLayer(new Renderer());
+            PushLayer(new Scene());
         }
         ~WolfRayet() 
         {

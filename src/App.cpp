@@ -1,6 +1,7 @@
 #include "App.h"
 
 App* App::s_instance = nullptr;
+Layer* result = nullptr;
 
 void App::Run() 
 {
@@ -11,7 +12,7 @@ void App::Run()
         // Loops through each layer (Only the Scene for now).
         for(const auto& layer : *m_layerStack.get()) 
         {
-            layer->Update();
+            result = layer->Update(result);
         }
 
         m_layerStack->GetOverlay()->Begin(); // Overlay is the interface in our case.

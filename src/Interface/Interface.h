@@ -26,5 +26,6 @@ class Interface : public Layer {
         void OnDetach() override;
         void Begin() override; 
         void End() override; 
+        Layer* Update(Layer* prev_result) override;
         
 };

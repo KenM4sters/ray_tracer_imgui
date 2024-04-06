@@ -14,9 +14,6 @@ void Scene::OnDetach()
     delete[] m_sceneData;
 }
 
-void Scene::Update() {}
-
-
 void Scene::PrepareImage() 
 {
     // Firstly, delete the old one.
@@ -72,5 +69,9 @@ void Scene::UpdateInterface()
     }
     // End() is called from the interface in case you forget to call it here, but there's no harm
     // in doing it anywhere for clarity.
+}
+
+Layer* Scene::Update(Layer* prev_result) {
+    return this;
 }
 

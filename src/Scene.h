@@ -23,10 +23,11 @@ class Scene : public Layer {
         }
         void OnAttach() override;
         void OnDetach() override;
-        void Update() override; // Currently does nothing, since we're not moving objects/lights/cameras currently.
+        Layer* Update(Layer* prev_result) override; // Currently does nothing, since we're not moving objects/lights/cameras currently.
         void PrepareImage();
         void PassImage();
         void UpdateInterface() override;
+        uint32_t GetWidth() {return m_viewportWidth;}
     private:
         std::shared_ptr<Image> m_image = nullptr;
         uint32_t* m_sceneData = nullptr;

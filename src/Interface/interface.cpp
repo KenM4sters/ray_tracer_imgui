@@ -53,3 +53,8 @@ void Interface::End()
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 } 
+
+Layer* Interface::Update(Layer* prev_result) 
+{
+    return this;
+}

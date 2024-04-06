@@ -14,7 +14,7 @@ class Layer {
         virtual void OnDetach() = 0;
         // Some layers may or may not need a mismatch of these functions, so we'll make it 
         // optional to override them.
-        virtual void Update() {}
+        virtual Layer* Update(Layer* prev_result) {}
         virtual void UpdateInterface() {};
         virtual void Begin() {}
         virtual void End() {}

@@ -8,16 +8,17 @@
 
 class Renderer : public Layer {
     public:
-        Renderer() {}
+        Renderer();
         ~Renderer() {}
+
+        void Render();
+        void PrepareImage();
+        void PassImage();
 
         void OnAttach() override;
         void OnDetach() override;
-        void Update() override; // Currently does nothing, since we're not moving objects/lights/cameras currently.
-        void PrepareImage();
-        void PassImage();
         void UpdateInterface() override;
-        void Render();
+        Layer* Update(Layer* prev_result) override; 
     private:
 
 };
