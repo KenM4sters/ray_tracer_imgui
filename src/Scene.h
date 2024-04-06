@@ -1,6 +1,5 @@
 #pragma once
 #include "Layer.h"
-#include "Image.h"
 
 /**
  * The main Scene class is responsible for the prepartion and delivery of the most important 
@@ -15,6 +14,15 @@
  * - (OnAttach() -> Begin() -> End() -> OnImGUIUpdate() -> OnDetach()).
 */
 
+struct SceneObject {
+    glm::vec3 Position;
+    glm::vec3 Scale;
+    glm::vec3 Rotation;
+    float Radius = 10;
+};
+
+
+
 class Scene : public Layer {
     public:
         Scene();
@@ -24,13 +32,9 @@ class Scene : public Layer {
         void OnAttach() override;
         void OnDetach() override;
         void Update() override; // Currently does nothing, since we're not moving objects/lights/cameras currently.
-        void PrepareImage();
-        void PassImage();
         void UpdateInterface() override;
+        void PushObjectsToRenderer();
     private:
-        std::shared_ptr<Image> m_image = nullptr;
-        uint32_t* m_sceneData = nullptr;
-        uint32_t m_viewportWidth = 0;
-        uint32_t m_viewportHeight = 0;
+        std::vector<SceneObject> m_sceneObjects; 
 
 };

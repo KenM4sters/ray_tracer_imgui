@@ -45,6 +45,9 @@ void Interface::Begin()
     ImGui::NewFrame();
     if (bShowDemoWindow)
         ImGui::ShowDemoWindow(&bShowDemoWindow);
+    
+    ImGui::DockSpaceOverViewport();
+    ImGui::ShowMetricsWindow();
 } 
 
 void Interface::End() 

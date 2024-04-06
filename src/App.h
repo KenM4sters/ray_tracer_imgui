@@ -4,20 +4,11 @@
 #include "LayerStack.h"
 
 /**
- * Going to try out a different architecture for this project, in which each layer will recieve
- * the "result" from the previous layer, which could just be the layer itself, or some new 
- * class, LayerResult etc... 
+ * The App class is very barebones and essentially just handles the creation of the window,
+ * the LayerStack which we push our layers onto in the main WolfRayet.cpp file, and iterates
+ * over those layers in the right order to make sure that functions are called in the order that 
+ * they should be called in.
  * 
- * The idea is that we can order the layers such that it emulates the lifetime of our generated
- * pixels:
- * 
- *  - Scene (Generates important data (position, normals etc..) for each object in our scene)
- *  - Renderer (Uses data from the scene to cast rays towards the scene and calculate what color
- *    each pixel should be based on any colllisions with scene objects).
- *  - ImGUI Interface (Uses data from the Renderer to project a 2D Image to the screen, containg the
- *    pixel data which is the ouput from the Renderer's ray casting.)
- * 
- * Not sure how it will it turn out, but it sure sounds interesting and only time will tell.
 */
 
 class App {
