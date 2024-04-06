@@ -11,6 +11,13 @@ Scene::Scene()
         glm::vec3(1.0f, 1.0f, 1.0f),
         2.0f
     }));
+
+    m_materials.emplace_back(PBRMaterial({
+        glm::vec3(1.0f),
+        0.2f,
+        0.8f,
+        0.4f
+    }));
 }
 
 void Scene::OnAttach() {

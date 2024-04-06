@@ -23,7 +23,7 @@ void Renderer::Update()
 {
     // if(m_sceneObjects) 
     // {
-    //     WolfRayetCore::Logger::PrintInteger(m_sceneObjects->at(0).Radius);
+    //     WolfRayet::Core::Logger::PrintInteger(m_sceneObjects->at(0).Radius);
     // }
 } 
 

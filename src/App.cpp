@@ -22,7 +22,7 @@ void App::Run()
         m_layerStack->GetOverlay()->End();
 
         m_window->PostRender();
-        WolfRayetCore::Time::Update(); // Useful for getting the time between frames.
+        WolfRayet::Core::Time::Update(); // Useful for getting the time between frames.
     }
 }
 

@@ -37,42 +37,45 @@ std::vector<Vertex> MakeVertexFromFloat(std::vector<float> f_vertices);
 /**
  * Static Time utility function used to access the elapsed time in miliseconds    
 */
-namespace WolfRayetCore 
+namespace WolfRayet
 {
-    class Time {
-        public:
-            // Returns the time since the start of the GLFW window in seconds.
-            inline static float GetElapsedTime() 
-            {
-                return static_cast<float>(glfwGetTime());
-            }
-            // Returns the time between frames in seconds.
-            inline static float& GetDeltaTime() 
-            {
-                return m_deltaTime;
-            }
-            static void Update() 
-            {
-                m_currentFrame = GetElapsedTime();
-                m_deltaTime = m_currentFrame - m_previousFrame;
-                m_previousFrame = m_currentFrame; 
-            }
-        private:
-            Time() {}
-            ~Time() {}
-            
-            static float m_currentFrame;
-            static float m_previousFrame;
-            static float m_deltaTime;
-    };
+    namespace Core {
+        
+        class Time {
+            public:
+                // Returns the time since the start of the GLFW window in seconds.
+                inline static float GetElapsedTime() 
+                {
+                    return static_cast<float>(glfwGetTime());
+                }
+                // Returns the time between frames in seconds.
+                inline static float& GetDeltaTime() 
+                {
+                    return m_deltaTime;
+                }
+                static void Update() 
+                {
+                    m_currentFrame = GetElapsedTime();
+                    m_deltaTime = m_currentFrame - m_previousFrame;
+                    m_previousFrame = m_currentFrame; 
+                }
+            private:
+                Time() {}
+                ~Time() {}
+                
+                static float m_currentFrame;
+                static float m_previousFrame;
+                static float m_deltaTime;
+        };
 
-    class Logger {
-        public:
-            static void PrintInteger(uint32_t val) { std::cout << val << std::endl; }
-            static void PrintString(std::string val) { std::cout << val << std::endl; }
-            static void PrintVec3f(glm::vec3 val, std::string belongsTo = "") 
-            {
-                std::cout << belongsTo << " | " << "x: " << val.x << "    " << "y: " << val.y  << "     " << "z: " << val.z << std::endl;
-            }
-    };
+        class Logger {
+            public:
+                static void PrintInteger(uint32_t val) { std::cout << val << std::endl; }
+                static void PrintString(std::string val) { std::cout << val << std::endl; }
+                static void PrintVec3f(glm::vec3 val, std::string belongsTo = "") 
+                {
+                    std::cout << belongsTo << " | " << "x: " << val.x << "    " << "y: " << val.y  << "     " << "z: " << val.z << std::endl;
+                }
+        };
+    }
 }
