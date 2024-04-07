@@ -17,7 +17,7 @@ class Renderer : public Layer {
         void OnDetach() override;
         void Update() override; 
         void UpdateInterface() override;
-        static void InsertSceneObjects(std::shared_ptr<std::vector<SceneObject>> objects);
+        static void SetActiveScene(const std::shared_ptr<Scene> const scene);
     private:
         void PrepareImage();
         void PassImage();
@@ -30,7 +30,7 @@ class Renderer : public Layer {
         uint32_t m_viewportWidth = 0;
         uint32_t m_viewportHeight = 0;
 
-        static std::shared_ptr<std::vector<SceneObject>> m_sceneObjects;
+        static std::shared_ptr<Scene> m_scene;
 
 
 };

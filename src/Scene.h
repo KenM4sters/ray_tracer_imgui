@@ -52,7 +52,7 @@ class Scene : public Layer {
         void OnDetach() override;
         void Update() override; // Currently does nothing, since we're not moving objects/lights/cameras currently.
         void UpdateInterface() override;
-        void PushObjectsToRenderer();
+        void PushSceneToRenderer();
     private:
         std::vector<SceneObject> m_sceneObjects; 
         std::vector<PBRMaterial> m_materials;

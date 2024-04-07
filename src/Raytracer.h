@@ -36,7 +36,7 @@ struct CollisionData {
 */
 class Raytracer {
     public:
-        static CollisionData TraceRay(Ray* ray, SceneObject* scene_obj);
+        static CollisionData TraceRay(Ray* ray, uint32_t nBounces);
         static CollisionData HandleCollision(Ray* ray, float distance, uint32_t object_index);
         static CollisionData RegisterMiss(Ray* ray);
 

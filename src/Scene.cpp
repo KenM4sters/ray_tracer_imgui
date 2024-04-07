@@ -21,7 +21,7 @@ Scene::Scene()
 }
 
 void Scene::OnAttach() {
-    PushObjectsToRenderer();
+    PushSceneToRenderer();
 }
 
 void Scene::OnDetach() {
@@ -35,7 +35,7 @@ void Scene::UpdateInterface()
 
 }
 
-void Scene::PushObjectsToRenderer() 
+void Scene::PushSceneToRenderer() 
 {
-    Renderer::InsertSceneObjects(std::make_shared<std::vector<SceneObject>>(m_sceneObjects));
+    Renderer::SetActiveScene(std::make_shared<Scene>(this));
 }

@@ -1,8 +1,9 @@
 #include "Renderer.h"
 #include "Interface/Interface.h"
+#include "Raytracer.h"
 
 
-std::shared_ptr<std::vector<SceneObject>> Renderer::m_sceneObjects = nullptr;
+std::shared_ptr<Scene> Renderer::m_scene = nullptr;
 
 Renderer::Renderer()
 {
@@ -91,14 +92,25 @@ void Renderer::Render()
 
 }
 
-void Renderer::InsertSceneObjects(std::shared_ptr<std::vector<SceneObject>> objects) 
+void Renderer::SetActiveScene(const std::shared_ptr<Scene> const scene) 
 {
-    m_sceneObjects = objects;
+    m_scene = scene;
+
 }
 
 uint32_t Renderer::FragmentShader(glm::vec2 uv) 
 {
     uint8_t r = (uint8_t)(uv.r * 255.0f);   
-    uint8_t g = (uint8_t)(uv.g * 255.0f);   
+    uint8_t g = (uint8_t)(uv.g * 255.0f);
+
+    // y = mx + c
+    Ray ray;
+    ray.Origin = glm::vec3(0.0f, 0.0f, 0.0f);
+    ray.Direction = glm::vec3(uv.x, uv.y, -1.0f);
+
+    CollisionData collision_data = Raytracer::TraceRay();
+
+
+
     return 0xff000000 | (g << 8) | r;
 }
