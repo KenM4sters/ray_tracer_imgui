@@ -22,7 +22,7 @@ struct Ray {
 struct CollisionData {
     glm::vec3 WorldPosition; // Clarifying that it's not relative to an object or something.
     glm::vec3 Normal;
-    float DistanceFromCamera; // Which is the origin for now.
+    float DistanceFromCamera = -1.0f; // Which is the origin for now.
 
     uint32_t object_index;
 };
@@ -36,8 +36,8 @@ struct CollisionData {
 */
 class Raytracer {
     public:
-        static CollisionData TraceRay(Ray* ray, uint32_t nBounces);
-        static CollisionData HandleCollision(Ray* ray, float distance, uint32_t object_index);
+        static CollisionData TraceRay(Ray* ray);
+        static CollisionData HandleCollision(Ray* ray, float distance, uint32_t obj_index);
         static CollisionData RegisterMiss(Ray* ray);
 
         static std::shared_ptr<std::vector<SceneObject>> m_sceneObjects;

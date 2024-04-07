@@ -37,5 +37,5 @@ void Scene::UpdateInterface()
 
 void Scene::PushSceneToRenderer() 
 {
-    Renderer::SetActiveScene(std::make_shared<Scene>(this));
+    Renderer::SetActiveScene(std::make_shared<Scene>(*this));
 }

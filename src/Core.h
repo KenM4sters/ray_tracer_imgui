@@ -37,7 +37,7 @@ std::vector<Vertex> MakeVertexFromFloat(std::vector<float> f_vertices);
 /**
  * Static Time utility function used to access the elapsed time in miliseconds    
 */
-namespace WolfRayet
+namespace WR
 {
     namespace Core {
         

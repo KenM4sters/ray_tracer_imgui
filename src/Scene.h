@@ -53,6 +53,11 @@ class Scene : public Layer {
         void Update() override; // Currently does nothing, since we're not moving objects/lights/cameras currently.
         void UpdateInterface() override;
         void PushSceneToRenderer();
+
+        // Getters
+        const std::shared_ptr<std::vector<SceneObject>> GetSceneObjects() const { return std::make_shared<std::vector<SceneObject>>(m_sceneObjects); }
+        const std::shared_ptr<std::vector<PBRMaterial>> GetPBRMaterials() const { return std::make_shared<std::vector<PBRMaterial>>(m_materials); }
+
     private:
         std::vector<SceneObject> m_sceneObjects; 
         std::vector<PBRMaterial> m_materials;

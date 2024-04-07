@@ -24,7 +24,7 @@ void Renderer::Update()
 {
     // if(m_sceneObjects) 
     // {
-    //     WolfRayet::Core::Logger::PrintInteger(m_sceneObjects->at(0).Radius);
+    //     WR::Core::Logger::PrintInteger(m_sceneObjects->at(0).Radius);
     // }
 } 
 
@@ -92,7 +92,7 @@ void Renderer::Render()
 
 }
 
-void Renderer::SetActiveScene(const std::shared_ptr<Scene> const scene) 
+void Renderer::SetActiveScene(std::shared_ptr<Scene> scene) 
 {
     m_scene = scene;
 
@@ -108,9 +108,10 @@ uint32_t Renderer::FragmentShader(glm::vec2 uv)
     ray.Origin = glm::vec3(0.0f, 0.0f, 0.0f);
     ray.Direction = glm::vec3(uv.x, uv.y, -1.0f);
 
-    CollisionData collision_data = Raytracer::TraceRay();
+    CollisionData collision_data = Raytracer::TraceRay(&ray);
+    // WR::Core::Logger::PrintInteger(collision_data.DistanceFromCamera);
 
+    if(collision_data.DistanceFromCamera < 0.0f) {} 
 
-
-    return 0xff000000 | (g << 8) | r;
+    return 0xff0000ff;
 }

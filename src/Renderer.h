@@ -5,7 +5,13 @@
 
 /**
  * Trying out a different application architecture this time for the Renderer, in which
- * the renderer inherits from the Layer class and sits between the 
+ * the renderer inherits from the Layer class and sits between the ImGUI interface and the Scene.
+ * 
+ * You can see that there's a couple of static functions here that are used exclusively by the 
+ * scene and the raytracer. I really like using static functions instead of passing parameters
+ * around everywhere, for example to constructors, but I'm aware of the dangers of having globally accesible functions
+ * and variables, so I'm mostly just experimenting here. 
+ *
 */
 
 class Renderer : public Layer {
@@ -17,7 +23,8 @@ class Renderer : public Layer {
         void OnDetach() override;
         void Update() override; 
         void UpdateInterface() override;
-        static void SetActiveScene(const std::shared_ptr<Scene> const scene);
+        static void SetActiveScene(std::shared_ptr<Scene> scene);
+        static const std::shared_ptr<const Scene> GetActiveScene() { return m_scene;}
     private:
         void PrepareImage();
         void PassImage();
