@@ -7,9 +7,9 @@ Scene::Scene()
     // Test Sphere.
     m_sceneObjects.emplace_back(SceneObject({
         glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(1.0f, 1.0f, 1.0f),
-        2.0f
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        0.5f
     }));
 
     m_materials.emplace_back(PBRMaterial({

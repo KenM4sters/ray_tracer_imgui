@@ -100,18 +100,21 @@ void Renderer::SetActiveScene(std::shared_ptr<Scene> scene)
 
 uint32_t Renderer::FragmentShader(glm::vec2 uv) 
 {
+    uv.x = uv.x*2-1;
+    uv.y = uv.y*2-1;
     uint8_t r = (uint8_t)(uv.r * 255.0f);   
     uint8_t g = (uint8_t)(uv.g * 255.0f);
 
     // y = mx + c
     Ray ray;
-    ray.Origin = glm::vec3(0.0f, 0.0f, 0.0f);
+    ray.Origin = glm::vec3(0.0f, 0.0f, 3.0f);
     ray.Direction = glm::vec3(uv.x, uv.y, -1.0f);
 
     CollisionData collision_data = Raytracer::TraceRay(&ray);
-    // WR::Core::Logger::PrintInteger(collision_data.DistanceFromCamera);
 
-    if(collision_data.DistanceFromCamera < 0.0f) {} 
+    if(collision_data.DistanceFromCamera < 0.0f) {
+        return 0xffff0000;
+    } 
 
     return 0xff0000ff;
 }

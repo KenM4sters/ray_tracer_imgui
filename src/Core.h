@@ -70,7 +70,8 @@ namespace WR
 
         class Logger {
             public:
-                static void PrintInteger(uint32_t val) { std::cout << val << std::endl; }
+                static void PrintInteger(int val) { std::cout << val << std::endl; }
+                static void PrintFloat(float val) { std::cout << val << std::endl; }
                 static void PrintString(std::string val) { std::cout << val << std::endl; }
                 static void PrintVec3f(glm::vec3 val, std::string belongsTo = "") 
                 {
