@@ -19,7 +19,7 @@ void Interface::OnAttach()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking Controls
 
-    // Setup Dear ImGui style
+    // Personal Preferences for ImGui Styles - not necessary.
     ImGui::StyleColorsDark();
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(app.GetWindow()->GetNativeWindow(), true);
@@ -52,7 +52,6 @@ void Interface::Begin()
 
 void Interface::End() 
 {
-    ImGui::End();
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 } 

@@ -48,18 +48,18 @@ CollisionData Raytracer::TraceRay(Ray* ray)
         float B = 2*(glm::dot(ray->Direction, origin));
         float C = glm::dot(origin, origin) - (pow(sphere.Radius, 2));
 
-        float discriminant = pow(B, 2.0f) - (4.0f*A*C);
+        float discriminant = pow(B, 2) - (4.0f*A*C);
 
         if(discriminant < 0.0f)
             continue;
         
-        float closest_intersection = -B - (glm::sqrt(discriminant) / (2.0f*A));
+        float closest_intersection = (-B - glm::sqrt(discriminant)) / (2.0f*A);
 
         // second criteria ensures that only the closest sphere is recorded as the intersected object (rays don't just dissapear after colliding).
         if(closest_intersection > 0.0f && closest_intersection < intersection_distance)
         {
             intersection_distance = closest_intersection;
-            intersected_sphere_index = (uint32_t)i;
+            intersected_sphere_index = static_cast<uint32_t>(i);
         }
     }
 
@@ -74,8 +74,10 @@ CollisionData Raytracer::HandleCollision(Ray* ray, float distance, uint32_t obj_
 {
     CollisionData data;
     data.DistanceFromCamera = distance;
+    data.WorldPosition = ray->Origin + ray->Direction * distance;
+    WR::Core::Logger::PrintVec3f(data.WorldPosition);
+    // WR::Core::Logger::PrintVec3f(ray->Direction);
     data.object_index = obj_index;
-
     return data;
 }
 

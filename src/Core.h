@@ -77,6 +77,10 @@ namespace WR
                 {
                     std::cout << belongsTo << " | " << "x: " << val.x << "    " << "y: " << val.y  << "     " << "z: " << val.z << std::endl;
                 }
+                static void PrintVec2f(glm::vec2 val, std::string belongsTo = "") 
+                {
+                    std::cout << belongsTo << " | " << "x: " << val.x << "    " << "y: " << val.y << std::endl;
+                }
         };
     }
 }

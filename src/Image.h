@@ -11,6 +11,7 @@ enum ImageFormat {
 class Image {
     public:
         Image(uint32_t width, uint32_t height, ImageFormat format);
+        Image() {} // Empty constructor for loading external images 
         ~Image();
 
         void LoadTextureFromFIle(const char* path);

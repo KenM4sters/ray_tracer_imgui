@@ -2,8 +2,17 @@
 #include "Interface/Interface.h"
 #include "Raytracer.h"
 
-
 std::shared_ptr<Scene> Renderer::m_scene = nullptr;
+
+static uint32_t ConvertFromRGBA(const glm::vec4& color) 
+{
+    uint8_t r = static_cast<uint8_t>(color.r*255.0f);
+    uint8_t g = static_cast<uint8_t>(color.g*255.0f);
+    uint8_t b = static_cast<uint8_t>(color.b*255.0f);
+    uint8_t a = static_cast<uint8_t>(color.a*255.0f);
+
+    return static_cast<uint32_t>((a << 24) | (b << 16) | (g << 8) | r);
+}
 
 Renderer::Renderer()
 {
@@ -40,7 +49,9 @@ void Renderer::PrepareImage()
         for(int x = 0; x < m_viewportWidth; x++) 
         {
             glm::vec2 uv = {x / (float)m_viewportWidth, y / (float)m_viewportHeight};
-            m_sceneData[(y*m_viewportWidth) + x] = FragmentShader(uv);
+            glm::vec4 color = FragmentShader(uv, x, y, m_viewportWidth);
+            color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
+            m_sceneData[(y*m_viewportWidth) + x] = ConvertFromRGBA(color);
         }
     }
     m_image->SetData(m_sceneData);
@@ -83,8 +94,9 @@ void Renderer::UpdateInterface()
         }
         PassImage();
     }
-    // End() is called from the interface in case you forget to call it here, but there's no harm
-    // in doing it anywhere for clarity.
+
+    ImGui::End(); // Needs to be called after any ImGui::Begin() call to siginify that we're done adding to the currently active viewport.
+
 }
 
 void Renderer::Render() 
@@ -98,23 +110,26 @@ void Renderer::SetActiveScene(std::shared_ptr<Scene> scene)
 
 }
 
-uint32_t Renderer::FragmentShader(glm::vec2 uv) 
+glm::vec4 Renderer::FragmentShader(glm::vec2 uv, int x, int y, int viewport_width) 
 {
+
     uv.x = uv.x*2-1;
     uv.y = uv.y*2-1;
     uint8_t r = (uint8_t)(uv.r * 255.0f);   
     uint8_t g = (uint8_t)(uv.g * 255.0f);
-
     // y = mx + c
     Ray ray;
-    ray.Origin = glm::vec3(0.0f, 0.0f, 3.0f);
+    ray.Origin = glm::vec3(0.0f, 0.0f, 2.0f);
     ray.Direction = glm::vec3(uv.x, uv.y, -1.0f);
 
     CollisionData collision_data = Raytracer::TraceRay(&ray);
 
     if(collision_data.DistanceFromCamera < 0.0f) {
-        return 0xffff0000;
-    } 
+        // return m_scene->GetBackgroundImageData()->GetData()[(y*viewport_width) + x];
+        return glm::vec4(0.6f, 0.7f, 0.9f, 1.0f);
+    }
 
-    return 0xff0000ff;
+    auto mat_color = m_scene->GetPBRMaterials()->at(collision_data.object_index).Albedo;
+    return glm::vec4(collision_data.WorldPosition, 1.0f);
 }
+          

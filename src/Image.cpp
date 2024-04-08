@@ -4,9 +4,7 @@
 
 Image::Image(uint32_t width, uint32_t height, ImageFormat format)
     : m_width(width), m_height(height), m_format(format)
-{
-
-}
+{}
 
 Image::~Image() {
     glDeleteTextures(1, &m_ID);

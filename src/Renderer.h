@@ -29,7 +29,7 @@ class Renderer : public Layer {
         void PrepareImage();
         void PassImage();
         void Render();
-        uint32_t FragmentShader(glm::vec2 uv);
+        glm::vec4 FragmentShader(glm::vec2 uv, int x, int y, int viewport_width);
 
     private:
         std::shared_ptr<Image> m_image = nullptr;
