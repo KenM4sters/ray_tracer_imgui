@@ -24,7 +24,7 @@ struct PBRMaterial {
 // The simplest type of light in our scene - emits 360deg light of some color and intensity (brightness).
 struct PointLight {
     glm::vec3 Position{0.0f};
-    glm::vec3 Color{1.0f, 1.0f, 0.5f};
+    glm::vec3 Colour{1.0f, 1.0f, 0.5f};
     float Intensity = 1.0f;
 };
 

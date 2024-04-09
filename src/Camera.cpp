@@ -5,7 +5,7 @@
 PerspectiveCamera::PerspectiveCamera(float fov, float near, float far)
     : m_fov(fov), m_near(near), m_far(far)
 {
-    m_position = glm::vec3(0.0f, 0.0f, 5.0f);
+    m_position = glm::vec3(0.0f, 0.0f, 2.0f);
     m_front = glm::vec3(0.0f, 0.0f, -1.0f);
 }
 

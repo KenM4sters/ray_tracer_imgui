@@ -4,55 +4,55 @@
 Scene::Scene()
     : Layer("Scene")
 {
-    // // Sphere1
-    // m_sceneObjects.emplace_back(SceneObject({
-    //     glm::vec3(-2.0f, 0.0f, 0.0f),
-    //     glm::vec3(1.0f, 1.0f, 1.0f),
-    //     glm::vec3(0.0f, 0.0f, 0.0f),
-    //     0.5f
-    // }));
-
-    // m_materials.emplace_back(PBRMaterial({
-    //     glm::vec3(1.0f, 0.0f, 0.0f),
-    //     0.2f,
-    //     0.8f,
-    //     0.4f
-    // }));
-
-    // Sphere2
+    // Sphere1
     m_sceneObjects.emplace_back(SceneObject({
-        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3(-1.0f, 0.0f, 0.0f),
         glm::vec3(1.0f, 1.0f, 1.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         0.5f
     }));
 
     m_materials.emplace_back(PBRMaterial({
+        glm::vec3(0.1f, 0.0f, 0.0f),
+        0.2f,
+        0.8f,
+        0.4f
+    }));
+
+    // Sphere2
+    m_sceneObjects.emplace_back(SceneObject({
+        glm::vec3(0.0f, -203.0f, 0.0f),
+        glm::vec3(1.0f, 1.0f, 1.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
+        200.0f
+    }));
+
+    m_materials.emplace_back(PBRMaterial({
+        glm::vec3(0.0f, 0.1f, 0.0f),
         0.2f,
         0.8f,
         0.4f
     }));
 
     // // Sphere3
-    // m_sceneObjects.emplace_back(SceneObject({
-    //     glm::vec3(2.0f, 0.0f, 0.0f),
-    //     glm::vec3(1.0f, 1.0f, 1.0f),
-    //     glm::vec3(0.0f, 0.0f, 0.0f),
-    //     0.5f
-    // }));
+    m_sceneObjects.emplace_back(SceneObject({
+        glm::vec3(1.0f, 0.0f, 0.0f),
+        glm::vec3(1.0f, 1.0f, 1.0f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        0.5f
+    }));
 
-    // m_materials.emplace_back(PBRMaterial({
-    //     glm::vec3(0.0f, 0.0f, 1.0f),
-    //     0.2f,
-    //     0.8f,
-    //     0.4f
-    // }));
+    m_materials.emplace_back(PBRMaterial({
+        glm::vec3(0.0f, 0.0f, 0.1f),
+        0.2f,
+        0.8f,
+        0.4f
+    }));
 
 
     // Lights
     m_lights.emplace_back(PointLight({
-        glm::vec3(3.0f, 3.0f, 2.0f),
+        glm::vec3(3.0f, 3.0f, 0.0f),
         glm::vec3(1.0f, 0.8f, 0.4f),
         0.8f
     }));
@@ -100,9 +100,9 @@ void Scene::UpdateInterface()
             std::string g_name = light_name + "g";
             std::string b_name = light_name + "b";
             std::string i_name = "Intensity";
-            ImGui::SliderFloat(r_name.c_str(), &light->Color.r, 0.0f, 1.0f);
-            ImGui::SliderFloat(g_name.c_str(), &light->Color.g, 0.0f, 1.0f);
-            ImGui::SliderFloat(b_name.c_str(), &light->Color.b, 0.0f, 1.0f);
+            ImGui::SliderFloat(r_name.c_str(), &light->Colour.r, 0.0f, 1.0f);
+            ImGui::SliderFloat(g_name.c_str(), &light->Colour.g, 0.0f, 1.0f);
+            ImGui::SliderFloat(b_name.c_str(), &light->Colour.b, 0.0f, 1.0f);
             ImGui::SliderFloat(i_name.c_str(), &light->Intensity, 0.0f, 10.0f);
         }
     }

@@ -41,15 +41,12 @@ void Renderer::PrepareImage()
     // Regenerate data with new size information (window may have resized).
     m_sceneData = new uint32_t[m_viewportWidth * m_viewportHeight];
 
-    Ray ray;
-    ray.Origin = m_camera->GetPosition();
 
     for(int y = 0; y < m_viewportHeight; y++) 
     {
         for(int x = 0; x < m_viewportWidth; x++) 
         {
-            ray.Direction = m_camera->GetRayDirections()[(y*m_viewportWidth) + x];
-            glm::vec4 color = FragmentShader(&ray);
+            glm::vec4 color = RayGen(x, y);
             color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
             m_sceneData[(y*m_viewportWidth) + x] = ConvertFromRGBA(color);
         }
@@ -88,7 +85,6 @@ void Renderer::UpdateInterface()
 
         if(!m_image || m_viewportWidth != m_image->GetWidth() || m_viewportHeight != m_image->GetHeight()) 
         {
-
             m_image = std::make_shared<Image>(m_viewportWidth, m_viewportHeight, ImageFormat::RGBA);
             m_camera->Resize(m_viewportWidth, m_viewportHeight);
             PrepareImage();
@@ -111,35 +107,51 @@ void Renderer::SetActiveScene(std::shared_ptr<Scene> scene)
 
 }
 
-glm::vec4 Renderer::FragmentShader(Ray* ray) 
-{
-    CollisionData collision_data = Raytracer::TraceRay(ray);
-
-    if(collision_data.DistanceFromCamera < 0.0f) {
-        // return m_scene->GetBackgroundImageData()->GetData()[(y*viewport_width) + x];
-        return glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-    }
+glm::vec4 Renderer::RayGen(uint32_t x, uint32_t y) 
+{   
+    Ray ray;
+    ray.Origin = m_camera->GetPosition();
+    ray.Direction = m_camera->GetRayDirections()[(y*m_viewportWidth) + x];
 
     auto& lights = m_scene->GetLights();
-    glm::vec3 mat_color = m_scene->GetPBRMaterials()->at(collision_data.object_index).Albedo;
 
-    glm::vec3 light_contribution{0.0f}; 
-    
-    // I was messing around with std::variant for the lights container to see how well it works in comparaison to polymorphism.
-    // Conclusion: It's alright, but I think taking advantage of polymorphism with dynamic_cast is at least a lot neater.
-    for(int i = 0; i < lights->size(); i++) 
+    glm::vec3 colour{0.0f};
+
+    float multiplier = 1.0f;
+    constexpr uint8_t nBounces = 2;
+    for(int i = 0 ; i < nBounces; i++) 
     {
-        if(auto light = std::get_if<PointLight>(&lights->at(i)))
-        {
-            glm::vec3 N = glm::normalize(collision_data.Normal);
-            glm::vec3 D = glm::normalize(collision_data.WorldPosition - light->Position);
-            float angle = glm::max(glm::dot(-D, N), 0.0f);
-            glm::vec3 color = light->Color * light->Intensity * angle;
-            light_contribution += color;
+        CollisionData collision_data = Raytracer::TraceRay(&ray);
+        PBRMaterial mat = m_scene->GetPBRMaterials()->at(collision_data.object_index);
+
+        if(collision_data.DistanceFromCamera < 0.0f) {
+            glm::vec3 sky_colour = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            colour += sky_colour * multiplier;
+            break;
         }
+
+        // I was messing around with std::variant for the lights container to see how well it works in comparison to polymorphism.
+        // Conclusion: It's alright, but I think taking advantage of polymorphism with dynamic_cast is at least a lot neater.
+        for(int i = 0; i < lights->size(); i++) 
+        {
+            if(auto light = std::get_if<PointLight>(&lights->at(i)))
+            {
+                glm::vec3 N = glm::normalize(collision_data.Normal);
+                glm::vec3 D = glm::normalize(collision_data.WorldPosition - light->Position);
+                float angle = glm::max(glm::dot(-D, N), 0.0f);
+                glm::vec3 light_contribution = light->Colour * light->Intensity * angle;
+                colour += light_contribution + mat.Albedo * multiplier;
+            }
+        } 
+        
+        multiplier *= 0.75f;
+
+
+        ray.Origin = collision_data.WorldPosition;
+        ray.Direction = glm::reflect(ray.Direction, collision_data.Normal);
     }
-    // WR::Core::Logger::PrintVec3f(light_contribution);
-    glm::vec3 final_color = mat_color + light_contribution;
-    return glm::vec4(final_color, 1.0f);
+
+
+    return glm::vec4(colour, 1.0f);
 }
           

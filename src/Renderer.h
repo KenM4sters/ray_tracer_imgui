@@ -31,7 +31,7 @@ class Renderer : public Layer {
         void PrepareImage();
         void PassImage();
         void Render();
-        glm::vec4 FragmentShader(Ray* ray);
+        glm::vec4 RayGen(uint32_t x, uint32_t y);
 
     private:
         std::shared_ptr<Image> m_image = nullptr;
