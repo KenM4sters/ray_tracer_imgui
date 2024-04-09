@@ -22,7 +22,6 @@ Renderer::Renderer(std::shared_ptr<PerspectiveCamera>* camera)
 
 void Renderer::OnAttach() 
 {
-
 }
 
 void Renderer::OnDetach() 
@@ -32,6 +31,7 @@ void Renderer::OnDetach()
 
 void Renderer::Update() 
 {
+    m_camera->Update();
 } 
 
 void Renderer::PrepareImage() 
@@ -42,15 +42,13 @@ void Renderer::PrepareImage()
     m_sceneData = new uint32_t[m_viewportWidth * m_viewportHeight];
 
     Ray ray;
-    ray.Origin = glm::vec3(0.0f, 0.0f, 3.0f);
+    ray.Origin = m_camera->GetPosition();
 
     for(int y = 0; y < m_viewportHeight; y++) 
     {
         for(int x = 0; x < m_viewportWidth; x++) 
         {
-            glm::vec2 uv = {x / (float)m_viewportWidth, y / (float)m_viewportHeight};
-            uv = uv * 2.0f - 1.0f;
-            ray.Direction = glm::vec3(uv.x, uv.y, -1.0f);
+            ray.Direction = m_camera->GetRayDirections()[(y*m_viewportWidth) + x];
             glm::vec4 color = FragmentShader(&ray);
             color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
             m_sceneData[(y*m_viewportWidth) + x] = ConvertFromRGBA(color);
@@ -92,6 +90,7 @@ void Renderer::UpdateInterface()
         {
 
             m_image = std::make_shared<Image>(m_viewportWidth, m_viewportHeight, ImageFormat::RGBA);
+            m_camera->Resize(m_viewportWidth, m_viewportHeight);
             PrepareImage();
         }
         PassImage();
