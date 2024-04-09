@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Image.h"
 #include "Camera.h"
+#include "Raytracer.h"
 
 /**
  * Trying out a different application architecture this time for the Renderer, in which
@@ -30,7 +31,7 @@ class Renderer : public Layer {
         void PrepareImage();
         void PassImage();
         void Render();
-        glm::vec4 FragmentShader(glm::vec2 uv, int x, int y, int viewport_width);
+        glm::vec4 FragmentShader(Ray* ray);
 
     private:
         std::shared_ptr<Image> m_image = nullptr;

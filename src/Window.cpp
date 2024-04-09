@@ -3,6 +3,14 @@
 #include "RenderCommand.h"
 #include "Window.h"
 
+
+InputState KEY_W = INACTIVE; // Global 
+InputState KEY_A = INACTIVE; // Global 
+InputState KEY_S = INACTIVE; // Global 
+InputState KEY_D = INACTIVE; // Global 
+InputState KEY_Q = INACTIVE; // Global 
+InputState KEY_E = INACTIVE; // Global 
+
 static void on_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     auto p_window = static_cast<Window*>(glfwGetWindowUserPointer(window));
     switch(key) 
@@ -14,9 +22,11 @@ static void on_key_callback(GLFWwindow* window, int key, int scancode, int actio
             if(action == GLFW_PRESS) std::cout << "SPACE_BAR pressed!" << std::endl;
             break;
         case GLFW_KEY_W:
-            if(action == GLFW_PRESS) std::cout << "W key pressed!" << std::endl; break;
+            if(action == GLFW_PRESS) std::cout << "W key pressed!" << std::endl; 
+            break;
         case GLFW_KEY_A:
-            if(action == GLFW_PRESS) std::cout << "A key pressed!" << std::endl; break;
+            if(action == GLFW_PRESS) std::cout << "A key pressed!" << std::endl; 
+            break;
         case GLFW_KEY_S:
             if(action == GLFW_PRESS) std::cout << "S key pressed!" << std::endl;
             break;
@@ -105,10 +115,30 @@ void Window::PostRender()
 {
     RenderCommand::ListenToEvents();
     RenderCommand::SwapBuffers(m_window);
+    HandleUserInput();
 }
 
 void Window::HandleResize(uint32_t w, uint32_t h) 
 {
     RenderCommand::SetViewportDimensions(w, h);
 }
+
+void Window::HandleUserInput() 
+{
+    // Rest InputState keys to inactive at the beginning of each frame.
+    KEY_W = INACTIVE;
+    KEY_A = INACTIVE;
+    KEY_S = INACTIVE;
+    KEY_D = INACTIVE;
+    KEY_Q = INACTIVE;
+    KEY_E = INACTIVE;
+
+    // Test each and hold that state for the rest of the frame.
+    if(glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS) { KEY_W = ACTIVE;}
+    if(glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS) { KEY_A = ACTIVE;}
+    if(glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS) { KEY_S = ACTIVE;}
+    if(glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS) { KEY_D = ACTIVE;}
+    if(glfwGetKey(m_window, GLFW_KEY_Q) == GLFW_PRESS) { KEY_Q = ACTIVE;}
+    if(glfwGetKey(m_window, GLFW_KEY_E) == GLFW_PRESS) { KEY_E = ACTIVE;}
+} 
 

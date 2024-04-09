@@ -1,19 +1,25 @@
 #include "Camera.h"
+#include "Window.h"
 
 
 PerspectiveCamera::PerspectiveCamera(float fov, float near, float far)
     : m_fov(fov), m_near(near), m_far(far)
 {
-    m_position = glm::vec3(0.0f, 0.0f, 2.0f);
+    m_position = glm::vec3(0.0f, 0.0f, 5.0f);
     m_front = glm::vec3(0.0f, 0.0f, -1.0f);
 }
 
-bool PerspectiveCamera::OnUpdate()
-{
-	return true;
+void PerspectiveCamera::Update()
+{	
+	if(KEY_W == ACTIVE) m_position += m_front * m_movementSpeed * WR::Core::Time::GetDeltaTime(); 
+	if(KEY_A == ACTIVE) m_position -= m_right * m_movementSpeed * WR::Core::Time::GetDeltaTime(); 
+	if(KEY_S == ACTIVE) m_position -= m_front * m_movementSpeed * WR::Core::Time::GetDeltaTime(); 
+	if(KEY_D == ACTIVE) m_position += m_right * m_movementSpeed * WR::Core::Time::GetDeltaTime(); 
+	if(KEY_Q == ACTIVE) m_position += m_up * m_movementSpeed * WR::Core::Time::GetDeltaTime(); 
+	if(KEY_E == ACTIVE) m_position -= m_up * m_movementSpeed * WR::Core::Time::GetDeltaTime(); 
 }
 
-void PerspectiveCamera::OnResize(uint32_t width, uint32_t height)
+void PerspectiveCamera::Resize(const uint32_t width, const uint32_t height)
 {
 	if (width == m_viewportWidth && height == m_viewportHeight)
 		return;
@@ -33,6 +39,7 @@ float PerspectiveCamera::GetRotationSpeed()
 void PerspectiveCamera::RecalculateProjection()
 {
     m_projection = glm::perspective(glm::radians(m_fov),  (float)m_viewportWidth / m_viewportHeight, m_near, m_far);
+	m_inverseProjection = glm::inverse(m_projection);
 }
 
 void PerspectiveCamera::RecalculateView()
@@ -49,12 +56,12 @@ void PerspectiveCamera::RecalculateRayDirections()
 	{
 		for (uint32_t x = 0; x < m_viewportWidth; x++)
 		{
-			glm::vec2 coord = { (float)x / (float)m_viewportWidth, (float)y / (float)m_viewportHeight };
-			coord = coord * 2.0f - 1.0f; 
+			glm::vec2 uv = { (float)x / (float)m_viewportWidth, (float)y / (float)m_viewportHeight };
+			uv = uv * 2.0f - 1.0f; 
 
-			glm::vec4 target = m_inverseProjection * glm::vec4(coord.x, coord.y, 1, 1);
+			glm::vec4 target = glm::vec4(uv.x, uv.y, -1, 1);
 			glm::vec3 rayDirection = glm::vec3(m_inverseView * glm::vec4(glm::normalize(glm::vec3(target) / target.w), 0)); // World space
-			m_rayDirections[x + y * m_viewportWidth] = rayDirection;
+			m_rayDirections[x + y * m_viewportWidth] = target;
 		}
 	}
 }

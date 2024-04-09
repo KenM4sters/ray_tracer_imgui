@@ -18,7 +18,7 @@ class WolfRayet : public App {
             if(m_window) 
             {
                 const auto& props = m_window->GetWindowProps();
-                m_camera = std::make_shared<PerspectiveCamera>(45.0f, 0.1f, 1000.0f);
+                m_camera = std::make_shared<PerspectiveCamera>(45.0f, 0.1f, 100.0f);
             }
             PushLayer(new Scene());
             PushLayer(new Renderer(&m_camera));

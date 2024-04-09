@@ -5,8 +5,8 @@ class PerspectiveCamera{
     public:
         PerspectiveCamera(float fov, float near, float far);
 
-        bool OnUpdate();
-        void OnResize(uint32_t width, uint32_t height);
+        void Update();
+        void Resize(const uint32_t width, const uint32_t height);
 
         const glm::mat4& GetProjection() const { return m_projection; }
         const glm::mat4& GetInverseProjection() const { return m_inverseProjection; }
@@ -34,10 +34,12 @@ class PerspectiveCamera{
         float m_near = 0.1f;
         float m_far = 100.0f;
         float m_rotationSpeed = 0.03f;
+        float m_movementSpeed = 5.0f;
 
         glm::vec3 m_position{0.0f, 0.0f, 0.0f};
         glm::vec3 m_front{0.0f, 0.0f, -1.0f};
         glm::vec3 m_up{0.0f, 1.0f, 0.0f};
+        glm::vec3 m_right{1.0f, 0.0f, 0.0f};
 
         // Ray directions
         std::vector<glm::vec3> m_rayDirections;

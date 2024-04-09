@@ -97,7 +97,7 @@ void Scene::UpdateInterface()
         {
             std::string name = light_name + std::to_string(i) + "Color";
             std::string r_name = light_name + "r";
-            std::string g_name = light_name + "r";
+            std::string g_name = light_name + "g";
             std::string b_name = light_name + "b";
             std::string i_name = "Intensity";
             ImGui::SliderFloat(r_name.c_str(), &light->Color.r, 0.0f, 1.0f);

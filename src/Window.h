@@ -2,6 +2,22 @@
 #include "Core.h"
 #include "GraphicsContext.h"
 
+
+// Since this application doesn't really involve much user interaction (we can only move the camera around)
+// I've just defined a really simple global state variable that holds the current state of important
+// keys. 
+enum InputState {
+    INACTIVE,
+    ACTIVE
+};
+
+extern InputState KEY_W; // Global 
+extern InputState KEY_A; // Global 
+extern InputState KEY_S; // Global 
+extern InputState KEY_D; // Global 
+extern InputState KEY_Q; // Global 
+extern InputState KEY_E; // Global 
+
 /**
  * The Window class is resonsible for handling everything to do with our window, from simply
  * setting it up (using GLFW), creating a graphics context and handling user input.
@@ -25,6 +41,7 @@ class Window {
         ~Window() {}
         void PreRender();
         void PostRender();
+        void HandleUserInput();
 
         // Getters
         inline GLFWwindow* GetNativeWindow() const {return m_window;}
