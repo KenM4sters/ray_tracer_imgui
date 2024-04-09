@@ -74,10 +74,10 @@ CollisionData Raytracer::HandleCollision(Ray* ray, float distance, uint32_t obj_
 {
     CollisionData data;
     data.DistanceFromCamera = distance;
-    data.WorldPosition = ray->Origin + ray->Direction * distance;
-    WR::Core::Logger::PrintVec3f(data.WorldPosition);
-    // WR::Core::Logger::PrintVec3f(ray->Direction);
+    data.WorldPosition = ray->Origin + (ray->Direction * distance);
     data.object_index = obj_index;
+    data.Normal = glm::normalize(data.WorldPosition - Renderer::GetActiveScene()->GetSceneObjects()->at(obj_index).Position);
+    
     return data;
 }
 

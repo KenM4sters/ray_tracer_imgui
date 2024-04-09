@@ -31,10 +31,6 @@ void Renderer::OnDetach()
 
 void Renderer::Update() 
 {
-    // if(m_sceneObjects) 
-    // {
-    //     WR::Core::Logger::PrintInteger(m_sceneObjects->at(0).Radius);
-    // }
 } 
 
 void Renderer::PrepareImage() 
@@ -65,7 +61,7 @@ void Renderer::PassImage()
 void Renderer::UpdateInterface() 
 {
     // Editor Window.
-    ImGui::Begin("Editor Menu"); 
+    ImGui::Begin("Render Controls"); 
     if(ImGui::Button("Render")) 
     {
         m_shouldUpdate = true;
@@ -112,24 +108,42 @@ void Renderer::SetActiveScene(std::shared_ptr<Scene> scene)
 
 glm::vec4 Renderer::FragmentShader(glm::vec2 uv, int x, int y, int viewport_width) 
 {
-
     uv.x = uv.x*2-1;
     uv.y = uv.y*2-1;
     uint8_t r = (uint8_t)(uv.r * 255.0f);   
     uint8_t g = (uint8_t)(uv.g * 255.0f);
     // y = mx + c
     Ray ray;
-    ray.Origin = glm::vec3(0.0f, 0.0f, 2.0f);
+    ray.Origin = glm::vec3(0.0f, 0.0f, 1.0f);
     ray.Direction = glm::vec3(uv.x, uv.y, -1.0f);
 
     CollisionData collision_data = Raytracer::TraceRay(&ray);
 
     if(collision_data.DistanceFromCamera < 0.0f) {
         // return m_scene->GetBackgroundImageData()->GetData()[(y*viewport_width) + x];
-        return glm::vec4(0.6f, 0.7f, 0.9f, 1.0f);
+        return glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
     }
 
-    auto mat_color = m_scene->GetPBRMaterials()->at(collision_data.object_index).Albedo;
-    return glm::vec4(collision_data.WorldPosition, 1.0f);
+    auto& lights = m_scene->GetLights();
+    glm::vec3 mat_color = m_scene->GetPBRMaterials()->at(collision_data.object_index).Albedo;
+
+    glm::vec3 light_contribution{0.0f}; 
+    
+    // I was messing around with std::variant for the lights container to see how well it works in comparaison to polymorphism.
+    // Conclusion: It's alright, but I think taking advantage of polymorphism with dynamic_cast is at least a lot neater.
+    for(int i = 0; i < lights->size(); i++) 
+    {
+        if(auto light = std::get_if<PointLight>(&lights->at(i)))
+        {
+            glm::vec3 N = glm::normalize(collision_data.Normal);
+            glm::vec3 D = glm::normalize(collision_data.WorldPosition - light->Position);
+            float angle = glm::max(glm::dot(-D, N), 0.0f);
+            glm::vec3 color = light->Color * light->Intensity * angle;
+            light_contribution += color;
+        }
+    }
+    // WR::Core::Logger::PrintVec3f(light_contribution);
+    glm::vec3 final_color = mat_color + light_contribution;
+    return glm::vec4(final_color, 1.0f);
 }
           
