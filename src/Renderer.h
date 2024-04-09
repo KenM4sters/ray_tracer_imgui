@@ -2,6 +2,7 @@
 #include "Layer.h"
 #include "Scene.h"
 #include "Image.h"
+#include "Camera.h"
 
 /**
  * Trying out a different application architecture this time for the Renderer, in which
@@ -16,7 +17,7 @@
 
 class Renderer : public Layer {
     public:
-        Renderer();
+        Renderer(std::shared_ptr<PerspectiveCamera>* camera); // Experiment - Is Passing a raw pointer to a shared_ptr ever worth it for the smaller memory overhead?
         ~Renderer() {}
 
         void OnAttach() override;
@@ -37,7 +38,9 @@ class Renderer : public Layer {
         uint32_t m_viewportWidth = 0;
         uint32_t m_viewportHeight = 0;
 
+        // Playing around with two different ways of obtaining important information from the scene and camera.
         static std::shared_ptr<Scene> m_scene;
+        std::shared_ptr<PerspectiveCamera> m_camera = nullptr;
 
 
 };

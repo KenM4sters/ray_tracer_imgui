@@ -14,9 +14,10 @@ static uint32_t ConvertFromRGBA(const glm::vec4& color)
     return static_cast<uint32_t>((a << 24) | (b << 16) | (g << 8) | r);
 }
 
-Renderer::Renderer()
+Renderer::Renderer(std::shared_ptr<PerspectiveCamera>* camera)
 {
     m_shouldUpdate = false;
+    m_camera = *camera;
 }
 
 void Renderer::OnAttach() 
