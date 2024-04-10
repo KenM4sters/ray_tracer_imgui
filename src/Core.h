@@ -9,6 +9,7 @@
 #include <vector>
 #include <cassert>
 #include <map>
+#include <string>
 
 /**
  * Example containers for rendering a square 

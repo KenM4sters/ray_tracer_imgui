@@ -2,7 +2,7 @@
 #include "Interface/Interface.h"
 #include "Raytracer.h"
 
-std::shared_ptr<Scene> Renderer::m_scene = nullptr;
+Scene* Renderer::m_scene = nullptr;
 
 static uint32_t ConvertFromRGBA(const glm::vec4& color) 
 {
@@ -101,7 +101,7 @@ void Renderer::Render()
 
 }
 
-void Renderer::SetActiveScene(std::shared_ptr<Scene> scene) 
+void Renderer::SetActiveScene(Scene* scene) 
 {
     m_scene = scene;
 
@@ -141,6 +141,7 @@ glm::vec4 Renderer::RayGen(uint32_t x, uint32_t y)
                 float angle = glm::max(glm::dot(-D, N), 0.0f);
                 glm::vec3 light_contribution = light->Colour * light->Intensity * angle;
                 colour += light_contribution + mat.Albedo * multiplier;
+
             }
         } 
         

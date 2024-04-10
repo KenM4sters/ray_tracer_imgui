@@ -63,7 +63,7 @@ class Scene : public Layer {
         inline const std::shared_ptr<std::vector<SceneObject>> GetSceneObjects() const { return std::make_shared<std::vector<SceneObject>>(m_sceneObjects); }
         inline const std::shared_ptr<std::vector<PBRMaterial>> GetPBRMaterials() const { return std::make_shared<std::vector<PBRMaterial>>(m_materials); }
         inline const std::shared_ptr<Image> GetBackgroundImageData() const { return std::make_shared<Image>(m_backgroundImage); }
-        inline const std::shared_ptr<std::vector<std::variant<PointLight>>> GetLights() const {return std::make_shared<std::vector<std::variant<PointLight>>>(m_lights);}
+        inline const std::shared_ptr<std::vector<std::variant<PointLight>>> GetLights() const {return std::make_shared<std::vector<std::variant<PointLight>>>(m_lights); }
 
     private:
         std::vector<SceneObject> m_sceneObjects; 

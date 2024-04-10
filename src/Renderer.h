@@ -25,8 +25,8 @@ class Renderer : public Layer {
         void OnDetach() override;
         void Update() override; 
         void UpdateInterface() override;
-        static void SetActiveScene(std::shared_ptr<Scene> scene);
-        static inline const std::shared_ptr<const Scene> GetActiveScene() { return m_scene;}
+        static void SetActiveScene(Scene* scene);
+        static inline const Scene* GetActiveScene() { return m_scene;}
     private:
         void PrepareImage();
         void PassImage();
@@ -39,8 +39,8 @@ class Renderer : public Layer {
         uint32_t m_viewportWidth = 0;
         uint32_t m_viewportHeight = 0;
 
-        // Playing around with two different ways of obtaining important information from the scene and camera.
-        static std::shared_ptr<Scene> m_scene;
+        // Playing around with two different ways of obtaining the scene and camera.
+        static Scene* m_scene;
         std::shared_ptr<PerspectiveCamera> m_camera = nullptr;
 
 
