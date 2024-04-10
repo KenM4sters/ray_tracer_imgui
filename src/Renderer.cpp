@@ -140,7 +140,7 @@ glm::vec4 Renderer::RayGen(uint32_t x, uint32_t y)
                 glm::vec3 D = glm::normalize(collision_data.WorldPosition - light->Position);
                 float angle = glm::max(glm::dot(-D, N), 0.0f);
                 glm::vec3 light_contribution = light->Colour * light->Intensity * angle;
-                colour += light_contribution + mat.Albedo * multiplier;
+                colour += light_contribution * mat.Albedo * multiplier + mat.A0;
 
             }
         } 

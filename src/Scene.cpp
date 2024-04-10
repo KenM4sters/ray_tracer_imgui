@@ -13,10 +13,10 @@ Scene::Scene()
     }));
 
     m_materials.emplace_back(PBRMaterial({
-        glm::vec3(0.1f, 0.0f, 0.0f),
+        glm::vec3(0.7f, 0.0f, 0.0f),
         0.2f,
         0.8f,
-        0.4f
+        0.0f
     }));
 
     // Sphere2
@@ -28,10 +28,10 @@ Scene::Scene()
     }));
 
     m_materials.emplace_back(PBRMaterial({
-        glm::vec3(0.0f, 0.1f, 0.0f),
+        glm::vec3(0.1f, 0.4f, 0.6f),
         0.2f,
         0.8f,
-        0.4f
+        0.0f
     }));
 
     // // Sphere3
@@ -43,10 +43,10 @@ Scene::Scene()
     }));
 
     m_materials.emplace_back(PBRMaterial({
-        glm::vec3(0.0f, 0.05f, 0.05f),
+        glm::vec3(0.5f, 0.00f, 0.7f),
         0.2f,
         0.8f,
-        0.4f
+        0.0f
     }));
 
 
@@ -54,7 +54,7 @@ Scene::Scene()
     m_lights.emplace_back(PointLight({
         glm::vec3(3.0f, 3.0f, 0.0f),
         glm::vec3(1.0f, 1.0f, 1.0f),
-        0.5f
+        2.0f
     }));
 
     // Background Image
@@ -82,7 +82,7 @@ void Scene::UpdateInterface()
         std::string index = std::to_string(i);
         ImGui::Text(std::string("Sphere" + index).c_str());
         std::string name = object_name + index + "pos";
-        ImGui::InputFloat3(name.c_str(), (float*)&m_sceneObjects[i].Position);
+        ImGui::DragFloat3(name.c_str(), (float*)&m_sceneObjects[i].Position, 0.1f, -10.0f, 10.0f);
     }
 
     std::string mat_name = "Sphere";
@@ -91,7 +91,9 @@ void Scene::UpdateInterface()
         std::string index = std::to_string(i);
         ImGui::Text(std::string("Mat" + index).c_str());
         std::string name = mat_name + index + "Albedo";
-        ImGui::InputFloat3(name.c_str(), (float*)&m_materials[i].Albedo);
+        ImGui::DragFloat3(name.c_str(), (float*)&m_materials[i].Albedo, 0.1f, -1.0f, 1.0f);
+        name = mat_name + index + "AO";
+        ImGui::InputFloat(name.c_str(), (float*)&m_materials[i].A0);
         
         name = mat_name + index + "Roughness";
         ImGui::SliderFloat(name.c_str(), &m_materials[i].Roughness, -1.0f, 1.0f);
@@ -109,7 +111,7 @@ void Scene::UpdateInterface()
             ImGui::Text(std::string("Light" + index).c_str());
             std::string name = light_name + index + "col";
             std::string i_name = "Intensity";
-            ImGui::InputFloat3(name.c_str(), (float*)&light->Colour);
+            ImGui::DragFloat3(name.c_str(), (float*)&light->Colour, 0.1f, -1.0f, 1.0f);
             ImGui::SliderFloat(i_name.c_str(), &light->Intensity, 0.0f, 10.0f);
         }
     }
