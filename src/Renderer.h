@@ -28,6 +28,7 @@ class Renderer : public Layer {
         static void SetActiveScene(Scene* scene);
         static inline const Scene* GetActiveScene() { return m_scene;}
     private:
+        void ProcessPixels(int x, int y);
         void PrepareImage();
         void PassImage();
         void Render();

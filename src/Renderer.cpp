@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "Interface/Interface.h"
 #include "Raytracer.h"
+#include <future>
 
 Scene* Renderer::m_scene = nullptr;
 
@@ -13,6 +14,7 @@ static uint32_t ConvertFromRGBA(const glm::vec4& color)
 
     return static_cast<uint32_t>((a << 24) | (b << 16) | (g << 8) | r);
 }
+
 
 Renderer::Renderer(std::shared_ptr<PerspectiveCamera>* camera)
 {
@@ -32,7 +34,14 @@ void Renderer::OnDetach()
 void Renderer::Update() 
 {
     m_camera->Update();
-} 
+}
+
+void Renderer::ProcessPixels(int x, int y) 
+{
+    glm::vec4 color = RayGen(x, y);
+    color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
+    m_sceneData[(y*m_viewportWidth) + x] = ConvertFromRGBA(color);
+}
 
 void Renderer::PrepareImage() 
 {
@@ -41,17 +50,25 @@ void Renderer::PrepareImage()
     // Regenerate data with new size information (window may have resized).
     m_sceneData = new uint32_t[m_viewportWidth * m_viewportHeight];
 
-
+    // Allocating threads for each pixel processing function.
+    std::vector<std::future<void>> futures;
     for(int y = 0; y < m_viewportHeight; y++) 
     {
         for(int x = 0; x < m_viewportWidth; x++) 
         {
-            glm::vec4 color = RayGen(x, y);
-            color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
-            m_sceneData[(y*m_viewportWidth) + x] = ConvertFromRGBA(color);
+            futures.push_back(std::async(std::launch::async, [this, x, y](){
+                ProcessPixels(x, y);
+            }));
         }
     }
+    // Wait until all threads are finished. 
+    for(const auto& f : futures) 
+    {
+        f.wait();
+    }
+
     m_image->SetData(m_sceneData);
+
 }
 
 void Renderer::PassImage() 
